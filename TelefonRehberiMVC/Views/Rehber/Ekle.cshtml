@@ -1,0 +1,111 @@
+﻿@model Persons;
+@{
+    ViewData["Title"] = "Ekle";
+}
+
+<h1>Ekle</h1>
+   <form input type="submit" asp-controller="Rehber" asp-action="Ekle" method="post">
+
+
+
+
+    <div class="form-group mb-3">
+        <label for="exampleInputEmail1">Adı</label>
+        <input type="text" class="form-control" asp-for="Ad" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="exampleInputEmail1">PhoneId</label>
+        <input type="text" disabled  class="form-control" asp-for="PhoneId" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="exampleInputEmail1">Phone</label>
+        <input type="text" class="form-control" asp-for="Phones.Numara" />
+    </div>
+@* 
+    <select class="form-select" aria-label="Default select example" asp-for="Departman">
+        <option selected>Departman</option>
+        <option value="1">Bilgi Sistemleri</option>
+        <option value="2">İnsan Kaynakları</option>
+        <option value="3">Operasyon</option>
+        <option value="4">Mali İşler</option>
+        <option value="5">Satış Pazarlama</option>
+    </select> *@
+
+
+
+    <label for="category">Departman:</label>
+    <select id="category" asp-for="Departman" class="form-select" aria-label="Default select example">
+        <option selected>Departman</option>
+        <option value="1">Bilgi Sistemleri</option>
+        <option value="2">İnsan Kaynakları</option>
+        <option value="3">Operasyon</option>
+        <option value="4">Mali İşler</option>
+        <option value="5">Satış Pazarlama</option>
+    </select>
+
+
+    <label for="subCategory">Birim:</label>
+        <select id="subCategory" disabled asp-for="Birim" class="form-select" aria-label="Default select example">
+        <option selected>Birim</option>
+        <!-- Başlangıçta boş olacak, çünkü henüz bir kategori seçilmedi. -->
+    </select>
+    <script>
+        document.getElementById("category").addEventListener("change", function () {
+            var selectedCategory = this.value;
+            var subCategoryDropdown = document.getElementById("subCategory");
+            // Seçilen kategoriye göre alt kategorileri güncelle
+            switch (selectedCategory) {
+                case "1":
+                    updateSubCategories(["Teknik Destek","Sistem Destek","Yazılım Geliştirme", "Raporlama veAnaliz",]);
+                    break;
+                case "2":
+                    updateSubCategories(["Bodro ve Özlük İşleri", "İnsan Kaynakları ve Eğitim"]);
+                    break;
+                case "3":
+                    updateSubCategories(["Aktarma ve Ulaştırma Operasyonları", "Operasyon","Mikro ve Filo Operasyonları"]);
+                    break;
+                case "4":
+                    updateSubCategories(["Muhasebe", "Finans ve Tahsilat"]);
+                    break;
+                case "5":
+                    updateSubCategories(["Satış Destek", "Kurumsal İletişim"]);
+                    break;
+                default:
+                    updateSubCategories([]); // Varsayılan olarak boşalt
+            }
+            function updateSubCategories(subCategories) {
+                subCategoryDropdown.innerHTML = ""; // Önceki alt kategorileri temizle
+                if (subCategories.length > 0) {
+                    subCategoryDropdown.disabled = false; // Alt kategori seçilebilir hale gelsin
+
+                    // Yeni alt kategorileri ekle
+                    subCategories.forEach(function (subCategory) {
+                        var option = document.createElement("option");
+                        option.value = subCategory;
+                        option.text = subCategory;
+                        subCategoryDropdown.add(option);
+                    });
+                } else {
+                    subCategoryDropdown.disabled = true; // Alt kategori seçilemez hale gelsin
+                }
+            }
+        });
+    </script>
+
+
+
+
+    <div class="form-group mb-3">
+        <label for="exampleInputEmail1">Adres</label>
+        <input type="text" class="form-control" asp-for="Adres" />
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Mail" id="exampleFormControlInput1" placeholder="name@example.com">
+    </div>
+
+   
+    <div class="input-group mb-3">
+        <button type="submit" class="btn btn-success"> Ekle </button>
+    </div>
+</form>

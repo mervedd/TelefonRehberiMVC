@@ -1,0 +1,81 @@
+﻿@model PersonelViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Rehberim</h2>
+<style>
+    .search-button {
+        margin-top: 23px;
+    }
+</style>
+<div class="col-3">
+    <div class="mb-3">
+        <form asp-controller="Rehber" asp-action="Index" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="search" asp-for="SearchName" class="form-control mr-sm-2" id="searchTerm" placeholder="Search" aria-label="Search" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-success" data-mdb-ripple-init>Ara</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+                
+
+
+<table class="table">
+
+
+    <thead>
+        <tr>
+
+            <th scope="col">Id</th>
+            <th scope="col">Adı</th>
+            <th> PhoneId</th>
+            <th scope="col">Phones</th>
+            <th scope="col">Departman</th>
+            <th scope="col">Birim</th>
+            <th scope="col">Adres</th>
+            <th scope="col">Email</th>
+
+            <th scope="col">İşlem</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.personelList)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Ad</td>
+                <td>@item.Phones.Id</td>
+                <td>@item.Phones.Numara</td>
+                <td>@item.Departman</td>
+                <td>@item.Birim</td>
+                <td>@item.Adres</td>
+                <td>@item.Mail</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Rehber" asp-action="Güncelle" asp-route-Id="@item.Id" type="submit"> Güncelle </a>
+
+                    @*  <a asp-controller="Rehber" asp-action="Güncelle" asp-route-Id="@item.Id" type="submit"> Sil </a> *@
+
+                    <a class="btn btn-danger" asp-controller="Rehber" asp-action="Sil" asp-route-Id="@item.Id" type="submit"> Sil </a>
+
+                </td>
+            </tr>
+
+
+        }
+    </tbody>
+
+</table>
+
+
+
+
+

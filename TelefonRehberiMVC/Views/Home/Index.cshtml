@@ -1,0 +1,154 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    .search-button {
+        margin-top: 23px;
+    }
+</style>
+
+<form asp-controller="Home" asp-action="Index" method="post">
+<div class="container mt-5">
+
+    <div class="row">
+
+        <form asp-controller="Home" asp-action="Index" method="post">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="category">Departman:</label>
+                    <select id="category" class="form-select" asp-for=DepartmanId aria-label="Default select example">
+                        <option selected>Departman</option>
+                        <option value="1">Bilgi Sistemleri</option>
+                        <option value="2">İnsan Kaynakları</option>
+                        <option value="3">Operasyon</option>
+                        <option value="4">Mali İşler</option>
+                        <option value="5">Satış Pazarlama</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="subCategory">Birim:</label>
+                    <select id="subCategory" disabled class="form-select" asp-for=BirimId aria-label="Default select example">
+                        <option selected>Birim</option>
+                        <!-- Başlangıçta boş olacak, çünkü henüz bir kategori seçilmedi. -->
+                    </select>
+                    <script>
+                        document.getElementById("category").addEventListener("change", function () {
+                            var selectedCategory = this.value;
+                            var subCategoryDropdown = document.getElementById("subCategory");
+                            // Seçilen kategoriye göre alt kategorileri güncelle
+                            switch (selectedCategory) {
+                                case "1":
+                                    updateSubCategories(["Teknik Destek", "Sistem Destek", "Yazılım Geliştirme", "Raporlama veAnaliz",]);
+                                    break;
+                                case "2":
+                                    updateSubCategories(["Bodro ve Özlük İşleri", "İnsan Kaynakları ve Eğitim"]);
+                                    break;
+                                case "3":
+                                    updateSubCategories(["Aktarma ve Ulaştırma Operasyonları", "Operasyon", "Mikro ve Filo Operasyonları"]);
+                                    break;
+                                case "4":
+                                    updateSubCategories(["Muhasebe", "Finans ve Tahsilat"]);
+                                    break;
+                                case "5":
+                                    updateSubCategories(["Satış Destek", "Kurumsal İletişim"]);
+                                    break;
+                                default:
+                                    updateSubCategories([]); // Varsayılan olarak boşalt
+                            }
+                            function updateSubCategories(subCategories) {
+                                subCategoryDropdown.innerHTML = ""; // Önceki alt kategorileri temizle
+                                if (subCategories.length > 0) {
+                                    subCategoryDropdown.disabled = false; // Alt kategori seçilebilir hale gelsin
+
+                                    // Yeni alt kategorileri ekle
+                                    subCategories.forEach(function (subCategory) {
+                                        var option = document.createElement("option");
+                                        option.value = subCategory;
+                                        option.text = subCategory;
+                                        subCategoryDropdown.add(option);
+                                    });
+                                } else {
+                                    subCategoryDropdown.disabled = true; // Alt kategori seçilemez hale gelsin
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+
+
+
+
+
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1">Adı:</label>
+                    <input type="text" asp-for="Ad" class="form-control" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="form-inline my-2 my-lg-0">
+                            <label for="exampleInputEmail1">&nbsp;</label>
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        </div>
+                        <div class="mb-3 search-button">
+                            <button type="submit" class="btn btn-success" data-mdb-ripple-init>
+                                Ara
+                                <label for="exampleInputEmail1"></label>
+                            </button>
+                        </div>
+                    </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="mb-5">
+        <table id="example" class="table table-striped" style="width:90%">
+            <thead>
+                <tr>
+
+                    <th scope="col">Id</th>
+                    <th scope="col">Adı</th>
+                    <th> PhoneId</th>
+                    <th scope="col">Phones</th>
+                    <th scope="col">Departman</th>
+                    <th scope="col">Birim</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Email</th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.personelList)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Ad</td>
+                        <td>@item.Phones.Id</td>
+                        <td>@item.Phones.Numara</td>
+                        <td>@item.Departman</td>
+                        <td>@item.Birim</td>
+                        <td>@item.Adres</td>
+                        <td>@item.Mail</td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+    </div>
+    </form>
+</div>
+
+
+       
+   
+    

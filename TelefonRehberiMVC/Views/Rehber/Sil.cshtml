@@ -1,0 +1,76 @@
+﻿@model Persons;
+@{
+    ViewData["Title"] = "Sil";
+}
+
+<h1>Sil</h1>
+<form input type="submit" asp-controller="Rehber" asp-action="Sil" method="post">
+    <input text="" asp-for="Id" hidden />
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Adı</label>
+        <input type="text" class="form-control" asp-for="Ad" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">PhoneId</label>
+        <input type="text" class="form-control" asp-for="PhoneId" />
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Phone</label>
+        <input type="text" class="form-control" asp-for="Phones" />
+    </div>
+
+    <script>
+        document.getElementById("category").addEventListener("change", function () {
+            var selectedCategory = this.value;
+            var subCategoryDropdown = document.getElementById("subCategory");
+            // Seçilen kategoriye göre alt kategorileri güncelle
+            switch (selectedCategory) {
+                case "1":
+                    updateSubCategories(["Teknik Destek", "Sistem Destek", "Yazılım Geliştirme", "Raporlama veAnaliz",]);
+                    break;
+                case "2":
+                    updateSubCategories(["Bodro ve Özlük İşleri", "İnsan Kaynakları ve Eğitim"]);
+                    break;
+                case "3":
+                    updateSubCategories(["Aktarma ve Ulaştırma Operasyonları", "Operasyon", "Mikro ve Filo Operasyonları"]);
+                    break;
+                case "4":
+                    updateSubCategories(["Muhasebe", "Finans ve Tahsilat"]);
+                    break;
+                case "5":
+                    updateSubCategories(["Satış Destek", "Kurumsal İletişim"]);
+                    break;
+                default:
+                    updateSubCategories([]); // Varsayılan olarak boşalt
+            }
+            function updateSubCategories(subCategories) {
+                subCategoryDropdown.innerHTML = ""; // Önceki alt kategorileri temizle
+                if (subCategories.length > 0) {
+                    subCategoryDropdown.disabled = false; // Alt kategori seçilebilir hale gelsin
+
+                    // Yeni alt kategorileri ekle
+                    subCategories.forEach(function (subCategory) {
+                        var option = document.createElement("option");
+                        option.value = subCategory;
+                        option.text = subCategory;
+                        subCategoryDropdown.add(option);
+                    });
+                } else {
+                    subCategoryDropdown.disabled = true; // Alt kategori seçilemez hale gelsin
+                }
+            }
+        });
+    </script>
+
+    <div class="form-group mb-3">
+        <label for="exampleInputEmail1">Adres</label>
+        <input type="text" class="form-control" asp-for="Adres" />
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Mail" id="exampleFormControlInput1" placeholder="name@example.com">
+    </div>
+
+    <button type="button" class="btn btn-danger">Sil</button>
+</form>
